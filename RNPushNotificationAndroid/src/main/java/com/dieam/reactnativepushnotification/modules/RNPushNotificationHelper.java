@@ -48,6 +48,7 @@ public class RNPushNotificationHelper {
         NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
                 .setContentTitle(bundle.getString("title"))
                 .setTicker(bundle.getString("ticker"))
+                .setNumber(bundle.getInt("count", 0))
                 .setCategory(NotificationCompat.CATEGORY_CALL)
                 .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

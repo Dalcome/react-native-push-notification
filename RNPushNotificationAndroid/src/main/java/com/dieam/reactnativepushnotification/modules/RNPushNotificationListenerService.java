@@ -1,5 +1,6 @@
 package com.dieam.reactnativepushnotification.modules;
 
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.ActivityManager;
@@ -25,7 +26,7 @@ public class RNPushNotificationListenerService extends GcmListenerService {
         intent.putExtra("notification", bundle);
         sendBroadcast(intent);
 
-        if (!isRunning) {
+        if (!isRunning || isKeyguardInputMode()) {
             new RNPushNotificationHelper(getApplication(), this).sendNotification(bundle);
         }
     }
@@ -43,5 +44,10 @@ public class RNPushNotificationListenerService extends GcmListenerService {
             }
         }
         return false;
+    }
+
+    private boolean isKeyguardInputMode() {
+        KeyguardManager keyguardManager = (KeyguardManager) this.getSystemService(KEYGUARD_SERVICE);
+        return keyguardManager.inKeyguardRestrictedInputMode();
     }
 }
