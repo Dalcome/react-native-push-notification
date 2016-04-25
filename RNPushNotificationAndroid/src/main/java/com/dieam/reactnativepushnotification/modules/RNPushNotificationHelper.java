@@ -100,7 +100,7 @@ public class RNPushNotificationHelper {
         String notificationIDString = bundle.getString("id");
 
         if ( notificationIDString != null ) {
-            notificationID = Integer.parseInt(notificationIDString);
+            notificationID = notificationIDString.hashCode();
         } else {
             notificationID = (int) System.currentTimeMillis();
         }
