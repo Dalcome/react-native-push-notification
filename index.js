@@ -174,7 +174,6 @@ Notifications._onNotification = function(data, isFromBackground = null) {
 			}
 
 			this.onNotification(notificationData);
->>>>>>> zo0r/master
 		}
 	}
 };
