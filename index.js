@@ -161,8 +161,8 @@ Notifications._onNotification = function(data, isFromBackground = null) {
 		} else {
 			var notificationData = {
 				foreground: ! isFromBackground,
+				data: data ? data : {},
 				...data
-				data: data ? data : {}
 			};
 
 			if ( typeof notificationData.data === 'string' ) {
