@@ -40,14 +40,16 @@ public class RNPushNotificationListenerService extends GcmListenerService {
     private void sendNotification(Bundle bundle) {
 
         Boolean isRunning = isApplicationRunning();
-        
+
         Intent intent = new Intent("RNPushNotificationReceiveNotification");
         bundle.putBoolean("foreground", isRunning);
         intent.putExtra("notification", bundle);
-        sendBroadcast(intent);
 
         if (!isRunning || isKeyguardInputMode()) {
             new RNPushNotificationHelper(getApplication(), this).sendNotification(bundle);
+        }
+        else {
+            sendBroadcast(intent);
         }
     }
 
