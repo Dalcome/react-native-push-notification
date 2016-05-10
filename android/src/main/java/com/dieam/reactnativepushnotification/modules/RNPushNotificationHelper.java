@@ -111,6 +111,7 @@ public class RNPushNotificationHelper {
         NotificationCompat.Builder notification = new NotificationCompat.Builder(mContext)
                 .setContentTitle(title)
                 .setTicker(bundle.getString("ticker"))
+                .setNumber(bundle.getInt("count", 0))
                 .setCategory(NotificationCompat.CATEGORY_CALL)
                 .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -157,7 +158,11 @@ public class RNPushNotificationHelper {
         String notificationIDString = bundle.getString("id");
 
         if ( notificationIDString != null ) {
-            notificationID = Integer.parseInt(notificationIDString);
+            try {
+                notificationID = Integer.parseInt(notificationIDString);
+            } catch (NumberFormatException e) {
+                notificationID = notificationIDString.hashCode();
+            }
         } else {
             notificationID = (int) System.currentTimeMillis();
         }
