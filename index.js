@@ -154,13 +154,27 @@ Notifications._onNotification = function(data, isFromBackground = null) {
 				foreground: ! isFromBackground,
 				message: data.getMessage(),
 				data: data.getData(),
+				badge: data.getBadgeCount(),
+				alert: data.getAlert(),
+				sound: data.getSound()
 			});
 		} else {
-			this.onNotification({
+			var notificationData = {
 				foreground: ! isFromBackground,
-				message: data.message,
-				data: data ? data : {},
-			});
+				...data
+				data: data ? data : {}
+			};
+
+			if ( typeof notificationData.data === 'string' ) {
+				try {
+					notificationData.data = JSON.parse(notificationData.data);
+				} catch(e) {
+					/* void */
+				}
+			}
+
+			this.onNotification(notificationData);
+>>>>>>> zo0r/master
 		}
 	}
 };
@@ -180,10 +194,6 @@ Notifications.presentLocalNotification = function() {
 
 Notifications.scheduleLocalNotification = function() {
 	return this.callNative('scheduleLocalNotification', arguments);
-};
-
-Notifications.cancelAllLocalNotifications = function() {
-	return this.callNative('cancelAllLocalNotifications', arguments);
 };
 
 Notifications.cancelAllLocalNotifications = function() {
