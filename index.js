@@ -159,6 +159,15 @@ Notifications._onNotification = function(data, isFromBackground = null) {
 				sound: data.getSound()
 			});
 		} else {
+			function replacer(key, value) {
+				try {
+					return JSON.parse(value);
+				}
+				catch (e) {
+					return value
+				}
+			}
+			data = JSON.parse(JSON.stringify(data, replacer));
 			var notificationData = {
 				foreground: ! isFromBackground,
 				data: data ? data : {},
